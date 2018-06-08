@@ -1,11 +1,11 @@
 # Snapshot Generator
 
-This app monitors the [push](https://developer.github.com/v3/activity/events/types/#pushevent) event and generate snapshots for a spec.
+This app monitors the [push](https://developer.github.com/v3/activity/events/types/#pushevent) event of a repository and generate snapshots for the spec in the repository.
 
 ## Install
 
 Once the Webhook is created,
-you **must** add a configuration file to the root of your repository.
+you **must** add a configuration file (`.pr-preview.json`) to the root of your repository.
 Nothing will happen until you do.
 
 ## Configuration file
