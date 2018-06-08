@@ -1,0 +1,24 @@
+{
+  "name": "snapshot-generator-server",
+  "version": "0.1.0",
+  "description": "Bot that generates commit snapshots.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xfq/commit-snapshot-server.git"
+  },
+  "author": "Fuqiao Xue <xfq.free@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/xfq/commit-snapshot-server/issues"
+  },
+  "homepage": "https://github.com/xfq/commit-snapshot-server",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mkdirp": "^0.5.1"
+  }
+}
