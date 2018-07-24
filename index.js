@@ -94,7 +94,7 @@ app.post('/payload', function (req, res) {
                                         obj.snapshots.push({
                                             id: `${push[0].id}`
                                         });
-                                        json = JSON.stringify(obj);
+                                        let json = JSON.stringify(obj);
                                         fs.writeFile(snapshots_json, json, 'utf8');
                                     }
                                 });
@@ -127,7 +127,7 @@ app.post('/payload', function (req, res) {
                                         obj.snapshots.push({
                                             id: `${push[0].id}`
                                         });
-                                        json = JSON.stringify(obj);
+                                        let json = JSON.stringify(obj);
                                         fs.writeFile(snapshots_json, json, 'utf8');
                                     }
                                 });
