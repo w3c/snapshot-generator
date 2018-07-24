@@ -83,6 +83,30 @@ app.post('/payload', function (req, res) {
                         if (err) {
                             console.error(err);
                         } else {
+                            // TODO maybe add a writeToJSON function
+                            if (fs.existsSync(`${__dirname}/public/snapshot/${repo}/snapshots.json`)) {
+                                fs.readFile('snapshots.json', 'utf8', function readFileCallback(err, data) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        obj = JSON.parse(data);
+                                        obj.snapshots.push({
+                                            id: `${push[0].id}`
+                                        });
+                                        json = JSON.stringify(obj);
+                                        fs.writeFile('snapshots.json', json, 'utf8');
+                                    }
+                                });
+                            } else {
+                                let obj = {
+                                    snapshots: []
+                                };
+                                obj.snapshots.push({
+                                    id: `${push[0].id}`
+                                });
+                                let json = JSON.stringify(obj);
+                                fs.writeFile('snapshots.json', json, 'utf8');
+                            }
                             download(getBikeshed(github_url), `${__dirname}/public/snapshot/${repo}/${push[0].id}.html`);
                         }
                     });
@@ -93,6 +117,29 @@ app.post('/payload', function (req, res) {
                         if (err) {
                             console.error(err);
                         } else {
+                            if (fs.existsSync(`${__dirname}/public/snapshot/${repo}/snapshots.json`)) {
+                                fs.readFile('snapshots.json', 'utf8', function readFileCallback(err, data) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        obj = JSON.parse(data);
+                                        obj.snapshots.push({
+                                            id: `${push[0].id}`
+                                        });
+                                        json = JSON.stringify(obj);
+                                        fs.writeFile('snapshots.json', json, 'utf8');
+                                    }
+                                });
+                            } else {
+                                let obj = {
+                                    snapshots: []
+                                };
+                                obj.snapshots.push({
+                                    id: `${push[0].id}`
+                                });
+                                let json = JSON.stringify(obj);
+                                fs.writeFile('snapshots.json', json, 'utf8');
+                            }
                             download(getReSpec(rawgit_url), `${__dirname}/public/snapshot/${repo}/${push[0].id}.html`);
                         }
                     });
