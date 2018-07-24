@@ -75,6 +75,7 @@ app.post('/payload', function (req, res) {
                 let file = `${repo}/${push[0].id}/${config.src_file}`;
                 let github_url = `https://raw.githubusercontent.com/${file}`;
                 let rawgit_url = `https://rawgit.com/${file}`;
+                let snapshots_json = `${__dirname}/public/snapshot/${repo}/snapshots.json`;
 
                 if (config.type === 'bikeshed') {
                     console.log(getBikeshed(github_url));
@@ -84,8 +85,8 @@ app.post('/payload', function (req, res) {
                             console.error(err);
                         } else {
                             // TODO maybe add a writeToJSON function
-                            if (fs.existsSync(`${__dirname}/public/snapshot/${repo}/snapshots.json`)) {
-                                fs.readFile('snapshots.json', 'utf8', function readFileCallback(err, data) {
+                            if (fs.existsSync(snapshots_json)) {
+                                fs.readFile(snapshots_json, 'utf8', function readFileCallback(err, data) {
                                     if (err) {
                                         console.log(err);
                                     } else {
@@ -94,7 +95,7 @@ app.post('/payload', function (req, res) {
                                             id: `${push[0].id}`
                                         });
                                         json = JSON.stringify(obj);
-                                        fs.writeFile('snapshots.json', json, 'utf8');
+                                        fs.writeFile(snapshots_json, json, 'utf8');
                                     }
                                 });
                             } else {
@@ -105,7 +106,7 @@ app.post('/payload', function (req, res) {
                                     id: `${push[0].id}`
                                 });
                                 let json = JSON.stringify(obj);
-                                fs.writeFile('snapshots.json', json, 'utf8');
+                                fs.writeFile(snapshots_json, json, 'utf8');
                             }
                             download(getBikeshed(github_url), `${__dirname}/public/snapshot/${repo}/${push[0].id}.html`);
                         }
@@ -118,7 +119,7 @@ app.post('/payload', function (req, res) {
                             console.error(err);
                         } else {
                             if (fs.existsSync(`${__dirname}/public/snapshot/${repo}/snapshots.json`)) {
-                                fs.readFile('snapshots.json', 'utf8', function readFileCallback(err, data) {
+                                fs.readFile(snapshots_json, 'utf8', function readFileCallback(err, data) {
                                     if (err) {
                                         console.log(err);
                                     } else {
@@ -127,7 +128,7 @@ app.post('/payload', function (req, res) {
                                             id: `${push[0].id}`
                                         });
                                         json = JSON.stringify(obj);
-                                        fs.writeFile('snapshots.json', json, 'utf8');
+                                        fs.writeFile(snapshots_json, json, 'utf8');
                                     }
                                 });
                             } else {
@@ -138,7 +139,7 @@ app.post('/payload', function (req, res) {
                                     id: `${push[0].id}`
                                 });
                                 let json = JSON.stringify(obj);
-                                fs.writeFile('snapshots.json', json, 'utf8');
+                                fs.writeFile(snapshots_json, json, 'utf8');
                             }
                             download(getReSpec(rawgit_url), `${__dirname}/public/snapshot/${repo}/${push[0].id}.html`);
                         }
