@@ -90,7 +90,7 @@ app.post('/payload', function (req, res) {
                                     if (err) {
                                         console.log(err);
                                     } else {
-                                        obj = JSON.parse(data);
+                                        let obj = JSON.parse(data);
                                         obj.snapshots.push({
                                             id: `${push[0].id}`
                                         });
@@ -123,7 +123,7 @@ app.post('/payload', function (req, res) {
                                     if (err) {
                                         console.log(err);
                                     } else {
-                                        obj = JSON.parse(data);
+                                        let obj = JSON.parse(data);
                                         obj.snapshots.push({
                                             id: `${push[0].id}`
                                         });
