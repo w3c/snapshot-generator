@@ -92,7 +92,10 @@ app.post('/payload', function (req, res) {
                                     } else {
                                         let obj = JSON.parse(data);
                                         obj.snapshots.push({
-                                            id: `${push[0].id}`
+                                            id: `${push[0].id}`,
+                                            message: `${push[0].message}`,
+                                            timestamp: `${push[0].timestamp}`,
+                                            url: `${push[0].url}`
                                         });
                                         let json = JSON.stringify(obj);
                                         fs.writeFile(snapshots_json, json, 'utf8');
@@ -103,7 +106,10 @@ app.post('/payload', function (req, res) {
                                     snapshots: []
                                 };
                                 obj.snapshots.push({
-                                    id: `${push[0].id}`
+                                    id: `${push[0].id}`,
+                                    message: `${push[0].message}`,
+                                    timestamp: `${push[0].timestamp}`,
+                                    url: `${push[0].url}`
                                 });
                                 let json = JSON.stringify(obj);
                                 fs.writeFile(snapshots_json, json, 'utf8');
@@ -125,7 +131,10 @@ app.post('/payload', function (req, res) {
                                     } else {
                                         let obj = JSON.parse(data);
                                         obj.snapshots.push({
-                                            id: `${push[0].id}`
+                                            id: `${push[0].id}`,
+                                            message: `${push[0].message}`,
+                                            timestamp: `${push[0].timestamp}`,
+                                            url: `${push[0].url}`
                                         });
                                         let json = JSON.stringify(obj);
                                         fs.writeFile(snapshots_json, json, 'utf8');
@@ -136,7 +145,10 @@ app.post('/payload', function (req, res) {
                                     snapshots: []
                                 };
                                 obj.snapshots.push({
-                                    id: `${push[0].id}`
+                                    id: `${push[0].id}`,
+                                    message: `${push[0].message}`,
+                                    timestamp: `${push[0].timestamp}`,
+                                    url: `${push[0].url}`
                                 });
                                 let json = JSON.stringify(obj);
                                 fs.writeFile(snapshots_json, json, 'utf8');
