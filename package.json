@@ -4,7 +4,8 @@
   "description": "Bot that generates commit snapshots.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "hint": "jshint index.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.6"
   }
 }
