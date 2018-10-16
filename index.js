@@ -74,7 +74,7 @@ app.post('/payload', function (req, res) {
                 // TODO support multiple commits in one push
                 let file = `${repo}/${push[0].id}/${config.src_file}`;
                 let github_url = `https://raw.githubusercontent.com/${file}`;
-                let rawgit_url = `https://rawgit.com/${file}`;
+                let githack_url = `https://raw.githack.com/${file}`;
                 let snapshots_json = `${__dirname}/public/snapshot/${repo}/snapshots.json`;
 
                 if (config.type === 'bikeshed') {
@@ -118,7 +118,7 @@ app.post('/payload', function (req, res) {
                         }
                     });
                 } else if (config.type === 'respec') {
-                    console.log(getReSpec(rawgit_url));
+                    console.log(getReSpec(githack_url));
 
                     mkdirp(`${__dirname}/public/snapshot/${repo}`, function (err) {
                         if (err) {
@@ -153,7 +153,7 @@ app.post('/payload', function (req, res) {
                                 let json = JSON.stringify(obj);
                                 fs.writeFile(snapshots_json, json, 'utf8');
                             }
-                            download(getReSpec(rawgit_url), `${__dirname}/public/snapshot/${repo}/${push[0].id}.html`);
+                            download(getReSpec(githack_url), `${__dirname}/public/snapshot/${repo}/${push[0].id}.html`);
                         }
                     });
                 } else {
@@ -178,8 +178,8 @@ function getBikeshed(github_url) {
     return `https://api.csswg.org/bikeshed/?url=${encodeURIComponent(github_url)}`;
 }
 
-function getReSpec(rawgit_url) {
-    return `https://labs.w3.org/spec-generator/?type=respec&url=${encodeURIComponent(rawgit_url)}`;
+function getReSpec(githack_url) {
+    return `https://labs.w3.org/spec-generator/?type=respec&url=${encodeURIComponent(githack_url)}`;
 }
 
 // https://stackoverflow.com/questions/11944932/how-to-download-a-file-with-node-js-without-using-third-party-libraries
