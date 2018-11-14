@@ -1,11 +1,15 @@
 {
   "name": "snapshot-generator-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Bot that generates commit snapshots.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "hint": "jshint index.js"
+    "audit": "npm audit",
+    "lint": "eslint index.js test/",
+    "hint": "jshint index.js test/",
+    "test": "mocha",
+    "build": "npm run audit && npm run lint && npm run hint && npm run test",
+    "start": "node --use_strict index"
   },
   "repository": {
     "type": "git",
@@ -16,14 +20,22 @@
   "bugs": {
     "url": "https://github.com/w3c/snapshot-generator/issues"
   },
+  "engines": {
+    "node": "8 || 10",
+    "npm": ">=6"
+  },
   "homepage": "https://github.com/w3c/snapshot-generator",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.3",
-    "mkdirp": "^0.5.1"
+    "body-parser": "1.18.3",
+    "express": "4.16.4",
+    "mkdirp": "0.5.1",
+    "winston": "3.1.0"
   },
   "devDependencies": {
-    "jshint": "^2.9.6",
-    "mocha": "^5.2.0"
+    "eslint-plugin-node": "8.0.0",
+    "eslint": "5.9.0",
+    "istanbul": "0.4.5",
+    "jshint": "2.9.6",
+    "mocha": "5.2.0"
   }
 }
