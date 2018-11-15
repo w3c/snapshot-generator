@@ -7,22 +7,34 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mkdirp = require('mkdirp');
+const winston = require('winston');
 
 const app = express();
+const today = new Date();
+const year = today.getFullYear();
+const month = (today.getMonth() + 101).toString().substr(1, 2);
+const day = (today.getDate() + 100).toString().substr(1, 2);
+const filename = `log/${year}-${month}-${day}.log`;
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console({level: 'info', json: false}),
+        new winston.transports.File({level: 'info', json: false, filename: filename})
+    ]
+});
 
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-    res.send('Hello World!')
+    res.send('Hello World!');
 });
 
 app.post('/', function (req, res) {
-    res.send('Got a POST request')
+    res.send('Got a POST request');
 });
 
 app.post('/payload', function (req, res) {
@@ -67,9 +79,9 @@ app.post('/payload', function (req, res) {
         resp.on('end', () => {
             let content = JSON.parse(data).content;
             if (content) {
-                let decodedContent = new Buffer(content, 'base64').toString('utf8');
+                let decodedContent = Buffer.from(content, 'base64').toString('utf8');
                 let config = JSON.parse(decodedContent);
-                console.log('Found repo config file', config);
+                logger.debug('Found repo config file ', config);
 
                 // TODO support multiple commits in one push
                 let file = `${repo}/${push[0].id}/${config.src_file}`;
@@ -78,17 +90,17 @@ app.post('/payload', function (req, res) {
                 let snapshots_json = `${__dirname}/public/snapshot/${repo}/snapshots.json`;
 
                 if (config.type === 'bikeshed') {
-                    console.log(getBikeshed(github_url));
+                    logger.debug(getBikeshed(github_url));
 
                     mkdirp(`${__dirname}/public/snapshot/${repo}`, function (err) {
                         if (err) {
-                            console.error(err);
+                            logger.error(err);
                         } else {
                             // TODO maybe add a writeToJSON function
                             if (fs.existsSync(snapshots_json)) {
                                 fs.readFile(snapshots_json, 'utf8', function readFileCallback(err, data) {
                                     if (err) {
-                                        console.log(err);
+                                        logger.debug(err);
                                     } else {
                                         let obj = JSON.parse(data);
                                         obj.snapshots.push({
@@ -118,16 +130,16 @@ app.post('/payload', function (req, res) {
                         }
                     });
                 } else if (config.type === 'respec') {
-                    console.log(getReSpec(githack_url));
+                    logger.debug(getReSpec(githack_url));
 
                     mkdirp(`${__dirname}/public/snapshot/${repo}`, function (err) {
                         if (err) {
-                            console.error(err);
+                            logger.error(err);
                         } else {
                             if (fs.existsSync(`${__dirname}/public/snapshot/${repo}/snapshots.json`)) {
                                 fs.readFile(snapshots_json, 'utf8', function readFileCallback(err, data) {
                                     if (err) {
-                                        console.log(err);
+                                        logger.debug(err);
                                     } else {
                                         let obj = JSON.parse(data);
                                         obj.snapshots.push({
@@ -157,17 +169,17 @@ app.post('/payload', function (req, res) {
                         }
                     });
                 } else {
-                    console.log('Error: "type" should be "bikeshed" or "respec"');
+                    logger.debug('Error: "type" should be "bikeshed" or "respec"');
                 }
             } else {
-                console.log('Not Found');
+                logger.debug('Not Found');
             }
 
-            // console.log(decodedContent);
+            // logger.debug(decodedContent);
         });
 
     }).on('error', (err) => {
-        console.log('Error: ' + err.message);
+        logger.debug('Error: ' + err.message);
     });
 
     res.send(`Repository: ${repo}
@@ -185,7 +197,7 @@ function getReSpec(githack_url) {
 // https://stackoverflow.com/questions/11944932/how-to-download-a-file-with-node-js-without-using-third-party-libraries
 function download(url, dest, cb) {
     let file = fs.createWriteStream(dest);
-    let request = https.get(url, function (response) {
+    https.get(url, function (response) {
         response.pipe(file);
         file.on('finish', function () {
             file.close(cb); // close() is async, call cb after close completes.
@@ -196,4 +208,4 @@ function download(url, dest, cb) {
     });
 }
 
-app.listen(3000, () => console.log('App listening on port 3000!'));
+app.listen(3000, () => logger.debug('App listening on port 3000!'));

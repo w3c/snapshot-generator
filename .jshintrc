@@ -1,5 +1,6 @@
 {
     "esversion": 6,
+    "node": true,
     "globals": {
         "require": false,
         "exports": false

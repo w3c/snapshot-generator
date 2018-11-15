@@ -1,0 +1,11 @@
+{
+  "plugins": ["node"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended"
+  ],
+  "rules": {
+    "no-eval": "error",
+    "no-implied-eval": "error"
+  }
+}
