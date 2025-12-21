@@ -187,11 +187,11 @@ Commits: ${push}`);
 });
 
 function getBikeshed(github_url) {
-    return `https://api.csswg.org/bikeshed/?url=${encodeURIComponent(github_url)}`;
+    return `https://www.w3.org/publications/spec-generator/?type=bikeshed-spec&url=${encodeURIComponent(github_url)}`;
 }
 
 function getReSpec(githack_url) {
-    return `https://labs.w3.org/spec-generator/?type=respec&url=${encodeURIComponent(githack_url)}`;
+    return `https://www.w3.org/publications/spec-generator/?type=respec&url=${encodeURIComponent(githack_url)}`;
 }
 
 // https://stackoverflow.com/questions/11944932/how-to-download-a-file-with-node-js-without-using-third-party-libraries
